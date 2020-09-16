@@ -30,11 +30,11 @@ let onclick = function() {
     this.owned = 'X';
     this.disabled = true;
 
-    sleep(200);
+    
     checkWinner();
     if (winner == false && scratch == false) // Game is not over
     {
-        AIpick();
+        setTimeout(AIpick, 200);
         checkWinner();
     }
 };
