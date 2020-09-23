@@ -10,8 +10,8 @@ app.get('/time', (req, res) => {
 	res.send(today.toDateString() + " " + today.toTimeString())
 })
 
-app.use(function (req,res,next) {
-	res.send("the path was " + req.url);
+app.get('/*', (req,res) => {
+	res.send("the path was " + req.path);
 })
 
 app.listen(port, () => {
