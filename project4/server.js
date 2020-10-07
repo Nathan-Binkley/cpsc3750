@@ -182,11 +182,11 @@ app.post('/user/auth', (req, res) => {
 	console.log(username);
 	console.log(password);
 	if(!username || username == ""){
-		res.redirect(`${proxy_path}/project4/login/#${encodeURIComponent(errorMessages.NO_USER)}`);
+		res.redirect(`${proxy_path}/login/#${encodeURIComponent(errorMessages.NO_USER)}`);
 		return;
 	}
 	if(!password || password == ""){
-		res.redirect(`${proxy_path}/project4/login/#${encodeURIComponent(errorMessages.NO_PASSWORD)}`);
+		res.redirect(`${proxy_path}/login/#${encodeURIComponent(errorMessages.NO_PASSWORD)}`);
 		return;
 	}
 	
@@ -195,7 +195,7 @@ app.post('/user/auth', (req, res) => {
 	if(Object.keys(uid).length === 0)
 	{
 		console.log("FINDING USER");
-		res.redirect(`${proxy_path}/project4/login/#${encodeURIComponent(errorMessages.USER_NOT_FOUND)}`);
+		res.redirect(`${proxy_path}/login/#${encodeURIComponent(errorMessages.USER_NOT_FOUND)}`);
 		return;
 	}
 	
@@ -207,11 +207,11 @@ app.post('/user/auth', (req, res) => {
 	if (pwd != compute)
 	{
 		console.log("HASH NO MATCH");
-		res.redirect(`${proxy_path}/project4/login/#${encodeURIComponent(errorMessages.PASSWORD_NOT_MATCH)}`);
+		res.redirect(`${proxy_path}/login/#${encodeURIComponent(errorMessages.PASSWORD_NOT_MATCH)}`);
 		return;
 	}
 	req.session.userid = username;
-	res.redirect(`${proxy_path}/project4/dynamic/user/info`);
+	res.redirect(`${proxy_path}/dynamic/user/info`);
 	return;
 	//TODO: here's an example of how to redirect correctly for missing userid.  
 	//	fill out the other validations, if passes, set userid to session and redirect 
@@ -264,37 +264,37 @@ app.post('/user', (req, res) => {
 	
 	// Verify all fields exist
 	if(!userid || userid == ""){
-		res.redirect(`/project4/registration/#${encodeURIComponent(errorMessages.NO_USER)}`);
+		res.redirect(`${proxy_path}/registration/#${encodeURIComponent(errorMessages.NO_USER)}`);
 		return;
 	}
 	if(!password || password == ""){
-		res.redirect(`/project4/registration/#${encodeURIComponent(errorMessages.NO_PASSWORD)}`);
+		res.redirect(`${proxy_path}/registration/#${encodeURIComponent(errorMessages.NO_PASSWORD)}`);
 		return;
 	}
 	if(!name || name == ""){
-		res.redirect(`/project4/registration/#${encodeURIComponent(errorMessages.NO_NAME)}`);
+		res.redirect(`${proxy_path}/registration/#${encodeURIComponent(errorMessages.NO_NAME)}`);
 		return;
 	}
 	//Validate Links
 	if(userid.length > 25)
 	{
-		res.redirect(`/project4/registration/#${encodeURIComponent(errorMessages.USER_TOO_LONG)}`);
+		res.redirect(`${proxy_path}/registration/#${encodeURIComponent(errorMessages.USER_TOO_LONG)}`);
 		return;
 	}
 	if(password.length > 100)
 	{
-		res.redirect(`/project4/registration/#${encodeURIComponent(errorMessages.PASSWORD_TOO_LONG)}`);
+		res.redirect(`${proxy_path}/registration/#${encodeURIComponent(errorMessages.PASSWORD_TOO_LONG)}`);
 		return;
 	}
 	if(name.length > 100)
 	{
-		res.redirect(`/project4/registration/#${encodeURIComponent(errorMessages.NAME_TOO_LONG)}`);
+		res.redirect(`${proxy_path}/registration/#${encodeURIComponent(errorMessages.NAME_TOO_LONG)}`);
 		return;
 	}
 
 	if(getUser(userid))
 	{
-		res.redirect(`/project4/registration/#${encodeURIComponent(errorMessages.USER_EXISTS)}`);
+		res.redirect(`${proxy_path}/registration/#${encodeURIComponent(errorMessages.USER_EXISTS)}`);
 		return;
 	}
 	let salt = new Date().getTime(); // Salt based on date
@@ -307,7 +307,7 @@ app.post('/user', (req, res) => {
 	}
 	//store new userObj
 	saveUser(userObj);
-	res.redirect(`/project4/login/#${encodeURIComponent(errorMessages.REGISTRATION_SUCCESS)}`);
+	res.redirect(`${proxy_path}/login/#${encodeURIComponent(errorMessages.REGISTRATION_SUCCESS)}`);
 	return;
 	
 	
@@ -323,7 +323,7 @@ app.get('/user/info', (req, res) => {
 	if(!req.session || !req.session.userid){
 		console.log("SUCCESSFULLY UNSUCCESSFUL");
 		console.log(req.session);
-		res.redirect(`${proxy_path}/project4/login/#${encodeURIComponent(errorMessages.LOGIN_REQUIRED)}`);
+		res.redirect(`${proxy_path}/login/#${encodeURIComponent(errorMessages.LOGIN_REQUIRED)}`);
 		return;
 	}
 	const userid = req.session.userid;
